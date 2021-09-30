@@ -96,6 +96,9 @@ e Y [1..n], devolver o produto X ·Y , e mostrar o tempo de execução dos 2 alg
 
 ### Autor 
 
+- Airton Y. C. Toyofuku
+- airton.toyofuku@gmail.com
+
 ---
 ### Licença
 Este projeto esta sob a licença [MIT](./LICENSE).

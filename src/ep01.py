@@ -17,14 +17,14 @@
 #
 # >Karatsuba (X, Y , n):
 # >1. se (n ≤ 3) retorna X · Y
-# >2. q ← |n/2|
+# >2. q ← (n/2)
 # >3. A ← X[q + 1..n]; B ← X[1..q]
 # >4. C ← Y [q + 1..n]; D ← Y [1..q]
-# >5. E ← Karatsuba (A, C, |n/2|)
-# >6. F ← Karatsuba (B, D, |n/2|)
-# >7. G ← Karatsuba (A + B, C + D, |n/2| + 1)
+# >5. E ← Karatsuba (A, C, n/2)
+# >6. F ← Karatsuba (B, D, n/2)
+# >7. G ← Karatsuba (A + B, C + D, n/2 + 1)
 # >8. H ← G − F − E
-# >9. R ← E × 10^2*|n/2|^ + H × 10^1*|n/2|^ + F
+# >9. R ← E × 10^(2*(n/2)) + H × 10^(n/2) + F
 # >10. retorna R"
 ########################################################################################################################
 
@@ -71,32 +71,23 @@ def multiplicacao_tradicional (X, Y, n):
 #  @retval valor da multiplicacao de X*Y
 def multiplicacao_karatsuba (X, Y, n):
 
+    import math
+
     if(n >= 3):
         return int(X) * int(Y)
 
-    # Deixando os vetores com o mesmo tamanho
-    if (len(X) > len(Y)):
-        Y.zfill(len(X))
-    if (len(Y) > len(X)):
-        X.zfill(len(Y))
+    q = math.ceil(n/2)
 
-    n = max(len(X), len(Y))
+    A = X[q:n]
+    B = X[0:q]
+    C = Y[q:n]
+    D = Y[0:n]
 
-    # Compensando um vetor de tamanho impar
-    q = n//2
-    if(n%2 > 0):
-        q = q + 1
-
-    A = X[0:q]
-    B = X[q:n]
-    C = Y[0:q]
-    D = Y[q:n]
-
-    E = multiplicacao_karatsuba(A, C, n//2)
-    F = multiplicacao_karatsuba(B, D, n//2)
-    G = multiplicacao_karatsuba(int(A) + int(B), int(C) + int(D), (n//2) + 1)
+    E = multiplicacao_karatsuba(A, C, math.floor(n/2))
+    F = multiplicacao_karatsuba(B, D, math.ceil(n/2))
+    G = multiplicacao_karatsuba( str(int(A) + int(B)), str(int(C) + int(D)), math.ceil(n/2) + 1)
     H = G - F - E
-    R = E * 10**(2*(n//2)) + H * 10**(n//2) + F
+    R = E * 10**(2*math.ceil(n/2)) + H * 10**(math.ceil(n/2)) + F
 
     return R
 
@@ -108,11 +99,11 @@ print("============================================")
 
 import time
 
-X = input("> Entre com o valor de X: ")
-Y = input("> Entre com o valor de Y: ")
+#X = input("> Entre com o valor de X: ")
+#Y = input("> Entre com o valor de Y: ")
 
-#X = "123456789123456789123456789123456789123456789123456789"
-#Y = "123456789123456789123456789123456789123456789123456789"
+X = "123456789123456789123456789123456789123456789123456789"
+Y = "123456789123456789123456789123456789123456789123456789"
 
 # Deixando os dois numeros com a mesma quantidade de algarismos
 if(len(X) > len(Y)):
@@ -142,4 +133,4 @@ print("> Resultado da multiplicacao karatsuba:  ", resultado_karatsuba, "e levou
 
 print("============================================")
 
-saida = input("> Digite enter para sair...")
+saida = input("> Precione qualquer tecla para sair...")
