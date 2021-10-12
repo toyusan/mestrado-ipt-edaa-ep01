@@ -7,7 +7,7 @@
 ########################################################################################################################
 
 ########################################################################################################################
-# "O algoritmo para multiplicação de dois valores inteiros X[1..n] e Y [1..n], de n
+# "O algoritmo para multiplicação de dois valores inteiros X[1..n] e Y[1..n], de n
 # algarismos, que aprendemos na época do ensino fundamental, tem complexidade de
 # tempo Θ(n2). Porém, existe um método de divisão e conquista, conhecido como
 # algoritmo de Karatsuba, publicado em 1962, que realiza a mesma tarefa com complexidade
@@ -17,14 +17,14 @@
 #
 # >Karatsuba (X, Y , n):
 # >1. se (n ≤ 3) retorna X · Y
-# >2. q ← (n/2)
+# >2. q ← teto(n/2)
 # >3. A ← X[q + 1..n]; B ← X[1..q]
 # >4. C ← Y [q + 1..n]; D ← Y [1..q]
-# >5. E ← Karatsuba (A, C, n/2)
-# >6. F ← Karatsuba (B, D, n/2)
-# >7. G ← Karatsuba (A + B, C + D, n/2 + 1)
+# >5. E ← Karatsuba (A, C, teto(n/2))
+# >6. F ← Karatsuba (B, D, piso(n/2))
+# >7. G ← Karatsuba (A + B, C + D, teto(n/2) + 1)
 # >8. H ← G − F − E
-# >9. R ← E × 10^(2*(n/2)) + H × 10^(n/2) + F
+# >9. R ← E × 10^(2*teto(n/2)) + H × 10^teto(n/2) + F
 # >10. retorna R"
 ########################################################################################################################
 
@@ -69,48 +69,56 @@ def multiplicacao_tradicional (X, Y, n):
 #  @param  Y: vetor com o segundo numero natural
 #  @param  n: quantidade de algarismos
 #  @retval valor da multiplicacao de X*Y
-def multiplicacao_karatsuba (X, Y, n):
+def multiplicacao_karatsuba(X, Y, n):
 
+    # O algortimo foi alterado em relação ao inicial proposto pelo EP
     import math
 
-    if(n >= 3):
+    if(n <= 3):
         return int(X) * int(Y)
 
     q = math.ceil(n/2)
 
-    A = X[q:n]
-    B = X[0:q]
-    C = Y[q:n]
-    D = Y[0:n]
+    A = X[q:]
+    B = X[:q]
+    C = Y[q:]
+    D = Y[:q]
 
     E = multiplicacao_karatsuba(A, C, math.floor(n/2))
     F = multiplicacao_karatsuba(B, D, math.ceil(n/2))
-    G = multiplicacao_karatsuba( str(int(A) + int(B)), str(int(C) + int(D)), math.ceil(n/2) + 1)
+
+    g1 = str(int(A) + int(B))
+    g2 = str(int(C) + int(D))
+
+    if (len(g1) > len(g2)):
+        g2 = g2.zfill(len(g1))
+    if (len(g2) > len(g1)):
+        g1 = g1.zfill(len(g2))
+
+    G = multiplicacao_karatsuba(g1, g2, max(len(g1),len(g2)))
+
     H = G - F - E
-    R = E * 10**(2*math.ceil(n/2)) + H * 10**(math.ceil(n/2)) + F
+    R = F * 10**(2*math.floor(n/2)) + H * 10**(math.floor(n/2)) + E
 
     return R
 
 ########################################################################################################################
-
 print("============================================")
 print("=    Multiplicacao de numeros grandes      =")
 print("============================================")
 
 import time
 
-#X = input("> Entre com o valor de X: ")
-#Y = input("> Entre com o valor de Y: ")
-
-X = "123456789123456789123456789123456789123456789123456789"
-Y = "123456789123456789123456789123456789123456789123456789"
+X = input("> Entre com o valor de X: ")
+Y = input("> Entre com o valor de Y: ")
 
 # Deixando os dois numeros com a mesma quantidade de algarismos
 if(len(X) > len(Y)):
-    Y.zfill(len(X))
+    Y = Y.zfill(len(X))
 if (len(Y) > len(X)):
-    X.zfill(len(Y))
+    X = X.zfill(len(Y))
 
+# Identificando a quantidade de algarismos
 n = max(len(X), len(Y))
 
 # Iniciando a multiplicacao via algoritmo tradicional
@@ -133,4 +141,4 @@ print("> Resultado da multiplicacao karatsuba:  ", resultado_karatsuba, "e levou
 
 print("============================================")
 
-saida = input("> Precione qualquer tecla para sair...")
+saida = input("> Precione enter para sair...")

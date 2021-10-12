@@ -41,6 +41,11 @@ e Y [1..n], devolver o produto X ·Y , e mostrar o tempo de execução dos 2 alg
 >9. R ← E × 10^2*|n/2|^ + H × 10^1*|n/2|^ + F
 >10. retorna R"
 
+O algoritmo descrito no enunciado do problema parece ter alguns erros, por isso o autor tomou a liberdade de fazer alguns ajustes:
+
+> O parametro E foi trocado com o parametro F na linha 9;
+> A soma de A+B e C+D podem gerar um numeros de tamanhos diferentes, por isso o tamanho foi igualado com 0 a esquerda;
+> O parametro |n/2| + 1 foi substituido pelo tamanho do vetor gerado pela soma A+B ou C+D, já igualados;
 ---
 
 ## Funcionalidades
