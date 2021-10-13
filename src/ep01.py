@@ -26,6 +26,14 @@
 # >8. H ← G − F − E
 # >9. R ← E × 10^(2*teto(n/2)) + H × 10^teto(n/2) + F
 # >10. retorna R"
+#
+# O algoritmo descrito no enunciado do problema parece ter alguns erros, por isso o autor tomou a liberdade de fazer
+# alguns ajustes:
+#
+# >1. O parametro E foi trocado com o parametro F na linha 9;
+# >2. A soma de A+B e C+D podem gerar um numeros de tamanhos diferentes, por isso o tamanho foi igualado com 0 a
+#     esquerda;
+# >3. O parametro |n/2| + 1 foi substituido pelo tamanho do vetor gerado pela soma A+B ou C+D, já igualados;
 ########################################################################################################################
 
 ########################################################################################################################
@@ -109,8 +117,8 @@ print("============================================")
 
 import time
 
-X = input("> Entre com o valor de X: ")
-Y = input("> Entre com o valor de Y: ")
+X = input("\n> Entre com o valor de X: ")
+Y = input("\n> Entre com o valor de Y: ")
 
 # Deixando os dois numeros com a mesma quantidade de algarismos
 if(len(X) > len(Y)):
@@ -122,23 +130,23 @@ if (len(Y) > len(X)):
 n = max(len(X), len(Y))
 
 # Iniciando a multiplicacao via algoritmo tradicional
-start_tradicional = time.time_ns()
+start_tradicional = time.perf_counter()
 resultado_tradicional = multiplicacao_tradicional(X, Y, n)
-end_tradicional = time.time_ns()
+end_tradicional = time.perf_counter()
 
 tempo_tradicional = end_tradicional - start_tradicional
 
-print("> Resultado da multiplicacao tradicional:", resultado_tradicional, "e levou", tempo_tradicional, "nanosegundos")
+print("\n> Resultado da multiplicacao tradicional:", resultado_tradicional, "e levou", tempo_tradicional, "segundos")
 
 # Iniciando a multiplicacao via algortimo de karatsuba
-start_karatsuba = time.time_ns()
+start_karatsuba = time.perf_counter()
 resultado_karatsuba = multiplicacao_karatsuba(X, Y, n)
-end_karatsuba = time.time_ns()
+end_karatsuba = time.perf_counter()
 
 tempo_karatsuba = end_karatsuba - start_karatsuba
 
-print("> Resultado da multiplicacao karatsuba:  ", resultado_karatsuba, "e levou", tempo_karatsuba, "nanosegundos")
+print("\n> Resultado da multiplicacao karatsuba:  ", resultado_karatsuba, "e levou", tempo_karatsuba, "segundos")
 
-print("============================================")
+print("\n============================================")
 
 saida = input("> Precione enter para sair...")

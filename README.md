@@ -5,13 +5,13 @@
 Tabela de conteúdos
 =================
 <!--ts-->
-   * [Sobre o projeto](#-sobre-o-projeto)
-   * [Funcionalidades](#-funcionalidades)
-   * [Como executar o projeto](#-como-executar-o-projeto)
-     * [Pré-requisitos](#pré-requisitos)
+   * [Sobre o projeto](#user-content--sobre-o-projeto)
+   * [Funcionalidades](#user-content--funcionalidades)
+   * [Como executar o projeto](#user-content--como-executar-o-projeto)
+     * [Pré-requisitos](#user-content-pré-requisitos)
      * [Rodando o programa](#user-content--rodando-o-programa)
 	 * [Exemplos de testes](#user-content--exemplos-de-testes)
-   * [Autor](#-autor)
+   * [Autor](#user-content--autor)
    * [Licença](#user-content--licença)
 <!--te-->
 
@@ -29,30 +29,30 @@ O(n^log3^) =~ O(n^1.58^). Implemente os algoritmos de multiplicação tradiciona
 de Karatsuba (apresentado a seguir). Seu programa deve receber dois inteiros X[1..n]
 e Y [1..n], devolver o produto X ·Y , e mostrar o tempo de execução dos 2 algoritmos.
 
->Karatsuba (X, Y , n):
->1. se (n ≤ 3) retorna X · Y
->2. q ← |n/2|
->3. A ← X[q + 1..n]; B ← X[1..q]
->4. C ← Y [q + 1..n]; D ← Y [1..q]
->5. E ← Karatsuba (A, C, |n/2|)
->6. F ← Karatsuba (B, D, |n/2|)
->7. G ← Karatsuba (A + B, C + D, |n/2| + 1)
->8. H ← G − F − E
->9. R ← E × 10^2*|n/2|^ + H × 10^1*|n/2|^ + F
->10. retorna R"
+> Karatsuba (X, Y , n):
+> 1. se (n ≤ 3) retorna X · Y
+> 2. q ← teto(n/2)
+> 3. A ← X[q + 1..n]; B ← X[1..q]
+> 4. C ← Y [q + 1..n]; D ← Y [1..q]
+> 5. E ← Karatsuba (A, C, teto(n/2))
+> 6. F ← Karatsuba (B, D, piso(n/2))
+> 7. G ← Karatsuba (A + B, C + D, teto(n/2) + 1)
+> 8. H ← G − F − E
+> 9. R ← E × 10^(2*teto(n/2)) + H × 10^teto(n/2) + F
+> 10. retorna R"
 
 O algoritmo descrito no enunciado do problema parece ter alguns erros, por isso o autor tomou a liberdade de fazer alguns ajustes:
 
-> O parametro E foi trocado com o parametro F na linha 9;
-> A soma de A+B e C+D podem gerar um numeros de tamanhos diferentes, por isso o tamanho foi igualado com 0 a esquerda;
-> O parametro |n/2| + 1 foi substituido pelo tamanho do vetor gerado pela soma A+B ou C+D, já igualados;
+>1. O parametro E foi trocado com o parametro F na linha 9;
+>2. A soma de A+B e C+D podem gerar um numeros de tamanhos diferentes, por isso o tamanho foi igualado com 0 a esquerda;
+>3. O parametro |n/2| + 1 foi substituido pelo tamanho do vetor gerado pela soma A+B ou C+D, já igualados;
 ---
 
 ## Funcionalidades
 
 - O usuário entra com dois valores inteiros X e Y, de n algarismos;
 - O software calcula o resultado da multiplicação dos números X e Y usando os algoritimos do ensino fundamental e de Karatsuba;
-- O software apresenta o tempo de execução dos dois algoritmos, em nano segundos; 
+- O software apresenta o tempo de execução dos dois algoritmos, em segundos; 
 ---
 
 ## Como executar o projeto
@@ -69,33 +69,34 @@ O algoritmo descrito no enunciado do problema parece ter alguns erros, por isso 
 
 #### Primeiro exemplo
 
-> X = 654896548922222
+> Entre com o valor de X: 654896548922222
 
-> Y = 222226548922222
+> Entre com o valor de Y: 222226548922222
 
-> Resultado da multiplicacao tradicional: 145535399968058520689805417284 e levou 560646 nanosegundos
+> Resultado da multiplicacao tradicional: 145535399968058520689805417284 e levou 0.00021309999999985507 segundos
 
-> Resultado da multiplicacao karatsuba:   145535399968058520689805417284 e levou 4643 nanosegundos
+> Resultado da multiplicacao karatsuba:   145535399968058520689805417284 e levou 0.00023109999999881836 segundos
+
 
 #### Segundo exemplo
 
-> X = 123456789123456789123456789123456789123456789123456789
+> Entre com o valor de X: 123456789123456789123456789123456789123456789123456789
 
-> Y = 123456789123456789123456789123456789123456789123456789
+> Entre com o valor de Y: 123456789123456789123456789123456789123456789123456789
 
-> Resultado da multiplicacao tradicional: 15241578780673678546105778311537878076969977842402077577351019811918920046486820281054720515622620750190521 e levou 2333147 nanosegundos
+> Resultado da multiplicacao tradicional: 15241578780673678546105778311537878076969977842402077577351019811918920046486820281054720515622620750190521 e levou 0.002128299999999861 segundos
 
-> Resultado da multiplicacao karatsuba:   15241578780673678546105778311537878076969977842402077577351019811918920046486820281054720515622620750190521 e levou 4927 nanosegundos
+> Resultado da multiplicacao karatsuba:   15241578780673678546105778311537878076969977842402077577351019811918920046486820281054720515622620750190521 e levou 0.0006614000000002562 segundos
  
 #### Terceiro exemplo
 
-> X = 987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321
+> Entre com o valor de X: 987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321
 
-> Y = 987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321
+> Entre com o valor de Y: 987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321987654321
 
-> Resultado da multiplicacao tradicional: 975461059740893159506325259271757359037189458802621558568053658333485758098917857864349957629782057395214155209724137444292037678859937913427838147995738382563638617131538851699439086267339320835239555403139789971041 e levou 12173215 nanosegundos
+> Resultado da multiplicacao tradicional: 975461059740893159506325259271757359037189458802621558568053658333485758098917857864349957629782057395214155209724137444292037678859937913427838147995738382563638617131538851699439086267339320835239555403139789971041 e levou 0.008858500000000546 segundos
 
-> Resultado da multiplicacao karatsuba:   975461059740893159506325259271757359037189458802621558568053658333485758098917857864349957629782057395214155209724137444292037678859937913427838147995738382563638617131538851699439086267339320835239555403139789971041 e levou 8719 nanosegundos
+> Resultado da multiplicacao karatsuba:   975461059740893159506325259271757359037189458802621558568053658333485758098917857864349957629782057395214155209724137444292037678859937913427838147995738382563638617131538851699439086267339320835239555403139789971041 e levou 0.0014525000000000787 segundos
 
 ---
 
